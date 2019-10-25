@@ -1,14 +1,16 @@
-# JupyterHub deployment in use at Université de Versailles
+# JupyterHub deployment in use at BB
 
 This is a [JupyterHub](https://jupyter.org/hub) deployment based on
-Docker currently in use at [Université de
-Versailles](https://jupyter.ens.uvsq.fr/).
+Docker currently in use at BB.
+
+The code is forked and customized from
+[defeo's repo](https://github.com/defeo/jupyterhub-docker).
 
 ## Features
 
 - Containerized single user Jupyter servers, using
   [DockerSpawner](https://github.com/jupyterhub/dockerspawner);
-- Central authentication to the University CAS server;
+- Central authentication with customized OAuth server;
 - User data persistence;
 - HTTPS proxy.
 
@@ -59,7 +61,3 @@ docker-compose up -d
 Read the [Docker Compose manual](https://docs.docker.com/compose/) to
 learn how to manage your application.
 
-## Acknowledgements
-
-<img src="https://opendreamkit.org/public/logos/Flag_of_Europe.svg" height="20"> Work partially funded by the EU H2020 project
-[OpenDreamKit](https://opendreamkit.org/).
