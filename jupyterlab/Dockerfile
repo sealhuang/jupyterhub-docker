@@ -1,22 +1,19 @@
 FROM jupyter/scipy-notebook:137a295ff71b
 
-LABEL maintainer="Luca De Feo <https://defeo.lu/>"
+LABEL maintainer="Lijie Huang <huanglijie@outlook.com>"
 
 USER root
+COPY ./sources.list /etc/apt/
 
 # APT packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     fonts-dejavu \
-    tzdata \
     gfortran \
     gcc \
-    scilab \
-    pari-gp \
-    libpari-dev \
-    sagemath \
-    sagemath-jupyter \
     libgmp-dev \
+    libxml2-dev \
+    libxslt-dev \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -24,44 +21,37 @@ USER $NB_UID
 
 # Conda packages
 # Sage conflicts with the latest jupyterhub, thus we must relax the pinning
-RUN conda install --quiet --yes \
-    'r-base=3.4.1' \
-    'r-irkernel=0.8*' \
-    'r-plyr=1.8*' \
-    'r-devtools=1.13*' \
-    'r-tidyverse=1.1*' \
-    'r-shiny=1.0*' \
-    'r-rmarkdown=1.8*' \
-    'r-forecast=8.2*' \
-    'r-rsqlite=2.0*' \
-    'r-reshape2=1.4*' \
-    'r-nycflights13=0.2*' \
-    'r-caret=6.0*' \
-    'r-rcurl=1.95*' \
-    'r-crayon=1.3*' \
-    'r-randomforest=4.6*' \
-    'r-htmltools=0.3*' \
-    'r-sparklyr=0.7*' \
-    'r-htmlwidgets=1.0*' \
-    'r-hexbin=1.27*' \
-    'jupyterhub' \
-#    'sage=8.*' \
-    'julia=1.0*' && \
+RUN conda config --set show_channel_urls yes && \ 
+    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ && \
+    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/ && \
+    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge && \
+    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/plotly && \
+    conda update conda && \
+#    conda update --all && \
+    conda install --yes \
+    'plotly' \
+    'plotly-orca' \
+    'psutil' \
+    'requests' \
+    'jupyter_contrib_nbextensions' && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR
 
-ENV CPATH=$CONDA_DIR/include
+RUN jupyter nbextension enable codefolding/main && \
+    jupyter nbextension enable toc2/main && \
+    jupyter nbextension enable hide_input_all/main
 
-RUN pip install \
-    pari_jupyter \
-#    PySingular jupyter_kernel_singular \
-    scilab-kernel && \
-    fix-permissions $CONDA_DIR
-
-# Fix SageMath kernel
+# Install svgutils
 USER root
-RUN sed -i 's/"\/usr\/bin\/sage"/"env", "PATH=\/usr\/local\/sbin:\/usr\/local\/bin:\/usr\/sbin:\/usr\/bin:\/sbin:\/bin", "\/usr\/bin\/sage"/' /usr/share/jupyter/kernels/sagemath/kernel.json
-USER $NB_UID
+RUN cd /tmp && \
+    git clone https://github.com/sealhuang/svg_utils.git && \
+    cd svg_utils && \
+    python setup.py install && \
+    cd && \
+    rm -rf /tmp/svg_utils && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
 
+USER $NB_UID
 # Add conda env hook
 COPY ./conda-activate.sh /usr/local/bin/before-notebook.d/

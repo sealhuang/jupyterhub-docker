@@ -13,6 +13,17 @@ services:
       - DOCKER_NETWORK_NAME=${COMPOSE_PROJECT_NAME}_default
       - HUB_IP=jupyterhub
       - HOST
+      - BBAUTH_NAME
+      - OAUTH2_TOKEN_URL
+      - OAUTH2_AUTHORIZE_URL
+      - OAUTH2_USERDATA_URL
+      - OAUTH2_CALLBACK_URL
+      - OAUTH2_USERDATA_REQUEST_TYPE
+      - OAUTH2_USERNAME_KEY
+      - OAUTH2_TLS_VERIFY
+      - OAUTH2_CLIENT_ID
+      - OAUTH2_CLIENT_SECRET
+      - ADMIN_USER
     labels:
       - "traefik.enable=true"
       - "traefik.frontend.rule=Host:${HOST}"
@@ -26,7 +37,7 @@ services:
     command: echo
 
   reverse-proxy:
-    image: traefik
+    image: traefik:1.7.17
     container_name: reverse-proxy
     ports:
       - "80:80"
