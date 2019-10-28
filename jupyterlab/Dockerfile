@@ -11,6 +11,9 @@ RUN apt-get update && \
     fonts-dejavu \
     gfortran \
     gcc \
+    xvfb \
+    libxtst6 \
+    libgconf-2-4 \
     libgmp-dev \
     libxml2-dev \
     libxslt-dev \
@@ -21,13 +24,12 @@ USER $NB_UID
 
 # Conda packages
 # Sage conflicts with the latest jupyterhub, thus we must relax the pinning
-RUN conda config --set show_channel_urls yes && \ 
-    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ && \
-    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/ && \
-    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge && \
-    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/plotly && \
+RUN conda config --set show_channel_urls yes && \
+    conda config --prepend channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/plotly && \
+    conda config --prepend  channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ && \
+    conda config --prepend channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/ && \
+    conda config --prepend channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge && \
     conda update conda && \
-#    conda update --all && \
     conda install --yes \
     'plotly' \
     'plotly-orca' \
@@ -55,3 +57,4 @@ RUN cd /tmp && \
 USER $NB_UID
 # Add conda env hook
 COPY ./conda-activate.sh /usr/local/bin/before-notebook.d/
+
