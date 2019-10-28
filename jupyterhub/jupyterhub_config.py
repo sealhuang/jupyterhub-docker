@@ -189,8 +189,8 @@ class BBAuthAuthenticator(OAuthenticator):
 ## Generic
 c.JupyterHub.admin_access = True
 # have JupyterLab start by default, or Jupyter Notebook
-#c.Spawner.default_url = '/lab'
-c.Spawner.default_url = '/tree'
+c.Spawner.default_url = '/lab'
+#c.Spawner.default_url = '/tree'
 
 c.JupyterHub.authenticator_class = BBAuthAuthenticator
 
