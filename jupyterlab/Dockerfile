@@ -31,6 +31,9 @@ RUN conda config --set show_channel_urls yes && \
     conda config --prepend channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge && \
     conda update conda && \
     conda install --yes \
+    'python=3.7' \
+    'jieba' \
+    'wordcloud' \
     'plotly' \
     'plotly-orca' \
     'psutil' \
