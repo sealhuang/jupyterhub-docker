@@ -17,6 +17,7 @@ RUN apt-get update && \
     libgmp-dev \
     libxml2-dev \
     libxslt-dev \
+    vim \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
