@@ -18,8 +18,8 @@ RUN apt-get update && \
     libxml2-dev \
     libxslt-dev \
     vim \
-    && apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 USER $NB_UID
 
@@ -30,13 +30,9 @@ RUN conda config --set show_channel_urls yes && \
     conda config --prepend  channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ && \
     conda config --prepend channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/ && \
     conda config --prepend channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge && \
-    conda update conda && \
-    conda install --yes python=3.7
+    conda update conda pandas
 
 RUN conda install --yes \
-    'jieba' \
-    'nbconvert' \
-    'wordcloud' \
     'plotly' \
     'plotly-orca' \
     'psutil' \
@@ -48,6 +44,8 @@ RUN conda install --yes \
 RUN jupyter nbextension enable codefolding/main && \
     jupyter nbextension enable toc2/main && \
     jupyter nbextension enable hide_input_all/main
+
+RUN pip install jieba wordcloud
 
 # Install svgutils
 USER root
