@@ -54,7 +54,14 @@ RUN cd /tmp && \
     cd svg_utils && \
     python setup.py install && \
     cd && \
-    rm -rf /tmp/svg_utils && \
+    rm -rf /tmp/svg_utils
+
+RUN cd /tmp && \
+    git clone https://github.com/sealhuang/SmartyDoc.git && \
+    cd SmartyDoc && \
+    python setup.py install && \
+    cd && \
+    rm -rf /tmp/SmartyDoc && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
