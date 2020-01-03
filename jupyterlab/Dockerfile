@@ -37,6 +37,8 @@ RUN conda install --yes \
     'plotly-orca' \
     'psutil' \
     'requests' \
+    'clickhouse-driver' \
+    'ipython' \
     'jupyter_contrib_nbextensions' && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR
