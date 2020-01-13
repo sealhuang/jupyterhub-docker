@@ -23,6 +23,8 @@ RUN apt-get update && \
 
 USER $NB_UID
 
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple retrying==1.3.3
+
 # Conda packages
 # Sage conflicts with the latest jupyterhub, thus we must relax the pinning
 RUN conda config --set show_channel_urls yes && \
@@ -47,7 +49,7 @@ RUN jupyter nbextension enable codefolding/main && \
     jupyter nbextension enable toc2/main && \
     jupyter nbextension enable hide_input_all/main
 
-RUN pip install jieba wordcloud
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple jieba wordcloud
 
 # Install svgutils
 USER root
