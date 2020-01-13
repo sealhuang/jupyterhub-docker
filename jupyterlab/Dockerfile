@@ -40,6 +40,7 @@ RUN conda install --yes \
     'psutil' \
     'requests' \
     'clickhouse-driver' \
+    'tzlocal' \
     'ipython' \
     'jupyter_contrib_nbextensions' && \
     conda clean -tipsy && \
