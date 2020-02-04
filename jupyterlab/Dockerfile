@@ -50,7 +50,7 @@ RUN jupyter nbextension enable codefolding/main && \
     jupyter nbextension enable toc2/main && \
     jupyter nbextension enable hide_input_all/main
 
-RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple jieba wordcloud
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple jieba wordcloud nbdime
 
 # Install svgutils
 USER root
