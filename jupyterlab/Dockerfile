@@ -46,11 +46,7 @@ RUN conda install --yes \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR
 
-RUN jupyter nbextension enable codefolding/main && \
-    jupyter nbextension enable toc2/main && \
-    jupyter nbextension enable hide_input_all/main
-
-RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple jieba wordcloud nbdime
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple jieba wordcloud nbdime weasyprint
 
 # Install svgutils
 USER root
@@ -58,6 +54,7 @@ RUN cd /tmp && \
     git clone https://github.com/sealhuang/svg_utils.git && \
     cd svg_utils && \
     python setup.py install && \
+    cp -r nbextensions/printview2 /opt/conda/share/jupyter/nbextensions && \
     cd && \
     rm -rf /tmp/svg_utils
 
@@ -69,6 +66,12 @@ RUN cd /tmp && \
     rm -rf /tmp/SmartyDoc && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
+
+RUN jupyter nbextension enable codefolding/main && \
+    jupyter nbextension enable toc2/main && \
+    jupyter nbextension enable hide_input_all/main && \
+    jupyter nbextension enable printview2/main
+
 
 USER $NB_UID
 # Add conda env hook

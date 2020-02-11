@@ -149,11 +149,18 @@ class BBAuthAuthenticator(OAuthenticator):
             scope = scope.split(' ')
 
         # Determine who the logged in user is
-        headers = {
-            "Accept": "application/json",
-            "User-Agent": "JupyterHub",
-            "Authorization": "{} {}".format(token_type, access_token)
-        }
+        if self.basic_auth:
+            headers = {
+                "Accept": "application/json",
+                "User-Agent": "JupyterHub",
+                "Authorization": "Basic {}".format(b64key.decode("utf8"))
+            }
+        else:
+            headers = {
+                "Accept": "application/json",
+                "User-Agent": "JupyterHub",
+                "Authorization": "{} {}".format(token_type, access_token)
+            }
         if self.userdata_url:
             url = url_concat(self.userdata_url, self.userdata_params)
         else:
