@@ -54,10 +54,6 @@ RUN cd /tmp && \
     git clone https://github.com/sealhuang/svg_utils.git && \
     cd svg_utils && \
     python setup.py install && \
-    cp -r nbextensions/printview2 /opt/conda/share/jupyter/nbextensions && \
-    cp smartydoc/samples/fonts/SimHei.ttf /usr/share/fonts && \
-    cp smartydoc/samples/fonts/SimSun.ttf /usr/share/fonts && \
-    fc-cache -fv && \
     cd && \
     rm -rf /tmp/svg_utils
 
@@ -65,6 +61,10 @@ RUN cd /tmp && \
     git clone https://github.com/sealhuang/SmartyDoc.git && \
     cd SmartyDoc && \
     python setup.py install && \
+    cp -r nbextensions/printview2 /opt/conda/share/jupyter/nbextensions && \
+    cp smartydoc/samples/fonts/SimHei.ttf /usr/share/fonts && \
+    cp smartydoc/samples/fonts/SimSun.ttf /usr/share/fonts && \
+    fc-cache -fv && \
     cd && \
     rm -rf /tmp/SmartyDoc && \
     fix-permissions $CONDA_DIR && \
