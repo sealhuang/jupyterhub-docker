@@ -70,13 +70,13 @@ RUN cd /tmp && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
+USER $NB_UID
+
 RUN jupyter nbextension enable codefolding/main && \
     jupyter nbextension enable toc2/main && \
     jupyter nbextension enable hide_input_all/main && \
     jupyter nbextension enable printview2/main
 
-
-USER $NB_UID
 # Add conda env hook
 COPY ./conda-activate.sh /usr/local/bin/before-notebook.d/
 
