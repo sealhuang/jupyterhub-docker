@@ -4,6 +4,8 @@ LABEL maintainer="Lijie Huang <huanglijie@outlook.com>"
 
 USER root
 COPY ./sources.list /etc/apt/
+COPY ./fonts /usr/share/fonts/
+RUN fc-cache -fv
 
 # APT packages
 RUN apt-get update && \
@@ -62,9 +64,6 @@ RUN cd /tmp && \
     cd SmartyDoc && \
     python setup.py install && \
     cp -r nbextensions/printview2 /opt/conda/share/jupyter/nbextensions && \
-    cp smartydoc/samples/fonts/SimHei.ttf /usr/share/fonts && \
-    cp smartydoc/samples/fonts/SimSun.ttf /usr/share/fonts && \
-    fc-cache -fv && \
     cd && \
     rm -rf /tmp/SmartyDoc && \
     fix-permissions $CONDA_DIR && \
