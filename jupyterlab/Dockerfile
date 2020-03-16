@@ -69,6 +69,10 @@ RUN cd /tmp && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
+# XXX: fix chrome-sandbox security issus
+RUN chown root:users /opt/conda/lib/orca_app/chrome-sandbox && \
+    chmod 4755 /opt/conda/lib/orca_app/chrome-sandbox
+
 USER $NB_UID
 
 RUN jupyter nbextension enable codefolding/main && \
