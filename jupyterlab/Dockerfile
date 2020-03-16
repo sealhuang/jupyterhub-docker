@@ -33,12 +33,12 @@ RUN conda config --set show_channel_urls yes && \
     conda config --prepend channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/plotly && \
     conda config --prepend  channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ && \
     conda config --prepend channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/ && \
-    conda config --prepend channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge && \
+#    conda config --prepend channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge && \
     conda update conda pandas
 
 RUN conda install --yes \
     'plotly' \
-    'plotly-orca' \
+    'plotly-orca=1.2' \
     'psutil' \
     'requests' \
     'clickhouse-driver' \
@@ -70,8 +70,8 @@ RUN cd /tmp && \
     fix-permissions /home/$NB_USER
 
 # XXX: fix chrome-sandbox security issus
-RUN chown root:users /opt/conda/lib/orca_app/chrome-sandbox && \
-    chmod 4755 /opt/conda/lib/orca_app/chrome-sandbox
+#RUN chown root:users /opt/conda/lib/orca_app/chrome-sandbox && \
+#    chmod 4755 /opt/conda/lib/orca_app/chrome-sandbox
 
 USER $NB_UID
 
