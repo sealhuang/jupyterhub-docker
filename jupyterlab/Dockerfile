@@ -48,7 +48,7 @@ RUN conda install --yes \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR
 
-RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple jieba wordcloud nbdime weasyprint
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple jieba wordcloud nbdime weasyprint pymongo kafka-python oss2
 
 # Install svgutils
 USER root
